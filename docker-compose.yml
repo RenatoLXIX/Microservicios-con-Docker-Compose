@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: microservicios
+    volumes:
+      - db_data:/var/lib/mysql
+
+  estudiante:
+    build: ./estudiante
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  evaluacion:
+    build: ./evaluacion
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
